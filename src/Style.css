@@ -1,0 +1,78 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    height: 100vh; 
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+  }
+  
+  .app-input {
+    margin-bottom: 10px;
+    margin-left: 10px;
+    padding: 5px;
+  }
+  
+  .app-button {
+    padding: 5px 10px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: aliceblue;
+    color: #f44;
+    border: none;
+  }
+
+  .app-button:hover{
+    box-shadow: 1px 1px 1px lightseagreen;
+    color: darkgreen;
+  }
+  
+  .todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px; 
+    margin: 5px 0; 
+    background-color: #ffffff; 
+    border: 1px solid #ddd;
+    border-radius: 5px; 
+  }
+  
+  .todo-text {
+    font-size: 16px;
+    margin-left: 5px;
+  }
+  
+  .todo-delete-button {
+    padding: 3px 6px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #f44;
+    color: white;
+    border: none;
+    border-radius: 3px;
+  }
+  .todo-update-button{
+    padding: 3px 6px;
+    margin:0 5px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #f44;
+    color: white;
+    border: none;
+    border-radius: 3px;
+
+  }
+
+  table{
+    margin-top: 10px;
+  }
+
+  table,th,td{
+    border:1px solid black;
+    border-collapse: collapse;
+    padding: 10px;
+  }
+  
