@@ -9,7 +9,11 @@ const SignupPage = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Call the onSubmit function with the new user details
     onSubmit({ name, email, password });
+    
+    // Redirect to the login page after successful signup
     navigate('/');
   };
 

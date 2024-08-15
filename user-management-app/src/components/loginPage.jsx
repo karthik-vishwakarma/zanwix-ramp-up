@@ -10,13 +10,21 @@ const LoginPage = ({ registeredUsers }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    // Debugging logs
+    console.log('Registered Users:', registeredUsers);
+    console.log('Entered Email:', email);
+    console.log('Entered Password:', password);
+
     // Check if the user is registered
     const user = registeredUsers.find(user => user.email === email);
-    
+
     if (user) {
-      // For simplicity, checking password is not implemented
-      //password validation here
-      navigate('/dashboard');
+      if (user.password === password) {
+        // Navigate to the dashboard if login is successful
+        navigate('/dashboard');
+      } else {
+        setError('Invalid password');
+      }
     } else {
       setError('Invalid email or password');
     }

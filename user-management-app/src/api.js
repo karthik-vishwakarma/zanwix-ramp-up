@@ -42,7 +42,9 @@ export const getUsers = async () => {
 export const createUser = async (user) => {
   try {
     const { data: users } = await getUsers();
-    const newUser = { ...user, id: users.length + 1 };
+    // Ensure unique ID
+    const maxId = users.reduce((max, user) => Math.max(max, user.id), 0);
+    const newUser = { ...user, id: maxId + 1 };
     users.push(newUser);
     saveUsersToLocalStorage(users);
     return { data: newUser };
