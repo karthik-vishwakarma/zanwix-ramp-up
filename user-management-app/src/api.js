@@ -1,31 +1,85 @@
-
 import axios from 'axios';
 
-const API_URL = '/user.json'; 
+const API_URL = '/user.json';
+const LOCAL_STORAGE_KEY = 'users';
 
-export const getUsers = () => axios.get(API_URL);
-export const createUser = (user) => {
-  return axios.get(API_URL).then(response => {
-    const users = response.data;
+// Utility function to get users from local storage
+const getUsersFromLocalStorage = () => {
+  const users = localStorage.getItem(LOCAL_STORAGE_KEY);
+  return users ? JSON.parse(users) : [];
+};
+
+// Utility function to save users to local storage
+const saveUsersToLocalStorage = (users) => {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(users));
+};
+
+// Fetch users
+export const getUsers = async () => {
+  try {
+    // Fetch static JSON data
+    const response = await axios.get(API_URL);
+    const jsonData = response.data;
+
+    // Combine with local storage data
+    const localStorageUsers = getUsersFromLocalStorage();
+
+    // Create a map to ensure uniqueness based on ID
+    const allUsers = new Map();
+
+    jsonData.forEach(user => allUsers.set(user.id, user));
+    localStorageUsers.forEach(user => allUsers.set(user.id, user));
+
+    // Convert map values to an array
+    return { data: Array.from(allUsers.values()) };
+  } catch (error) {
+    console.error('Failed to fetch users:', error);
+    throw error;
+  }
+};
+
+// Create a new user
+export const createUser = async (user) => {
+  try {
+    const { data: users } = await getUsers();
     const newUser = { ...user, id: users.length + 1 };
     users.push(newUser);
+    saveUsersToLocalStorage(users);
     return { data: newUser };
-  });
+  } catch (error) {
+    console.error('Failed to create user:', error);
+    throw error;
+  }
 };
-export const updateUser = (id, user) => {
-  return axios.get(API_URL).then(response => {
-    const users = response.data;
-    const index = users.findIndex(u => u.id === id);
-    if (index > -1) {
-      users[index] = { ...users[index], ...user };
+
+// Update an existing user
+export const updateUser = async (id, updatedUser) => {
+  try {
+    const { data: users } = await getUsers();
+    const index = users.findIndex(user => user.id === id);
+
+    if (index === -1) {
+      throw new Error('User not found');
     }
+
+    users[index] = { ...users[index], ...updatedUser };
+    saveUsersToLocalStorage(users);
     return { data: users[index] };
-  });
+  } catch (error) {
+    console.error('Failed to update user:', error);
+    throw error;
+  }
 };
-export const deleteUser = (id) => {
-  return axios.get(API_URL).then(response => {
-    const users = response.data;
+
+// Delete a user
+export const deleteUser = async (id) => {
+  try {
+    const { data: users } = await getUsers();
     const filteredUsers = users.filter(user => user.id !== id);
+    saveUsersToLocalStorage(filteredUsers);
     return { data: filteredUsers };
-  });
+  } catch (error) {
+    console.error('Failed to delete user:', error);
+    throw error;
+  }
 };
