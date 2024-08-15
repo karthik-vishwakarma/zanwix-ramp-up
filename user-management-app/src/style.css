@@ -1,0 +1,79 @@
+
+.box {
+    padding: 20px;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  input {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+  }
+  
+  button {
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .error {
+    color: red;
+  }
+
+
+/* Container for the user list items */
+ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .user-data {
+    flex: 1;
+    display: flex;
+    align-items: start;
+    padding-right: 10px;
+  }
+  
+  .actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  button {
+    padding: 6px 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button.edit {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  button.delete {
+    background-color: #f44336; 
+    color: white;
+  }
+  
+  button:hover {
+    opacity: 0.8;
+  }
+  
+  
+  

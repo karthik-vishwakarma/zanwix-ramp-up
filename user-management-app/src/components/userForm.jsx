@@ -1,42 +1,49 @@
 
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const UserForm = ({ user, onSubmit, onCancel }) => {
-  const [formData, setFormData] = useState(user || { name: '', email: '' });
+const UserForm = ({ onSubmit, userToEdit }) => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [buttonLabel, setButtonLabel] = useState('Add User');
 
   useEffect(() => {
-    setFormData(user || { name: '', email: '' });
-  }, [user]);
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+    if (userToEdit) {
+      setName(userToEdit.name);
+      setEmail(userToEdit.email);
+      setButtonLabel('Edit User');
+    } else {
+      setName('');
+      setEmail('');
+      setButtonLabel('Add User');
+    }
+  }, [userToEdit]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    const user = { id: userToEdit ? userToEdit.id : undefined, name, email };
+    onSubmit(user);
+    setName('');
+    setEmail('');
+    setButtonLabel('Add User'); 
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <input
         type="text"
-        name="name"
-        value={formData.name}
-        onChange={handleChange}
         placeholder="Name"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
         required
       />
       <input
         type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
         placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
         required
       />
-      <button type="submit">Submit</button>
-      <button type="button" onClick={onCancel}>Cancel</button>
+      <button type="submit">{buttonLabel}</button>
     </form>
   );
 };
